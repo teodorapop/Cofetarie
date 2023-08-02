@@ -1,0 +1,1 @@
+[{"id": 3, "nume": "p2", "descriere": "yummyeeeer", "pret": 100, "calorii": 500, "an_introducere": 2029}]
