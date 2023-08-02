@@ -38,6 +38,6 @@ def get_an_introducere(prajitura):
 
 
 def to_str(prajitura):
-    return f'Prajitura cu id {get_id(prajitura)} {get_nume(prajitura)} - {get_descriere(prajitura)[:15]}, ' \
-           f'pretul = {get_pret(prajitura)} are {get_calorii(prajitura)} calorii, anul intriducerii: ' \
+    return f'Prajitura cu id {get_id(prajitura)} {get_nume(prajitura)} - {get_descriere(prajitura)[:25]}, ' \
+           f'pretul = {get_pret(prajitura)} are {get_calorii(prajitura)} calorii, anul introducerii: ' \
            f'{get_an_introducere(prajitura)}'

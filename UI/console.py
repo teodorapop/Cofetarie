@@ -126,13 +126,13 @@ def run_operatii(prajituri):
         rezultat = get_praji_with_max_calorii_by_year(prajituri)
         # ia fiecare cheie din anul rezultat
         for an in rezultat:
-            print('Prajitura cu caloriile maxime din anul {} este: {}'.format(an, to_str(rezultat[an])))
+            print('Prajitura cu caloriile maxime din anul {} este: {}'.format(an, get_nume(rezultat[an])))
 
     def handle_ordonare_prajituri_dupa_raport_pret_calorii(prajituri):
         rezultat = get_prajituri_si_raport_pret_calitate(prajituri)
         sorted_rezultat = sorted(rezultat.items(), key=lambda x: x[1])
         for nume, raport in sorted_rezultat:
-            print('Prajitura {} are raportul prat/calorii: {}'.format(nume, raport))
+            print('Prajitura {} are raportul pret/calorii: {}'.format(nume, raport))
 
     def handle_sumele_preturilor_pentru_fiecare_an(prajituri):
 

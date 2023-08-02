@@ -27,7 +27,7 @@ def get_praji_with_max_calorii_by_year(prajituri):
     for prajitura in prajituri:
         an = get_an_introducere(prajitura)
         if an in result:
-            if get_calorii(prajitura) > get_calorii(result):
+            if get_calorii(prajitura) > get_calorii(result[an]):
                 result[an] = prajitura
         else:
             result[an] = prajitura
