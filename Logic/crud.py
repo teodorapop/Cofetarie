@@ -42,18 +42,13 @@ def update_prajitura(prajituri, prajitura, filename):
     # v1
     # enumerate da tupluri de forma index valoare
 
-    # for i, prajitura_existenta in enumerate(prajituri):
-    #     if get_id(prajitura_existenta) == get_id(prajitura):
-    #         prajituri[i] = prajitura
-    #         break
+    for i, prajitura_existenta in enumerate(prajituri):
+        if get_id(prajitura_existenta) == get_id(prajitura):
+            prajituri[i] = prajitura
+            break
+    write_file(prajituri, filename)
 
     # v2
-    result = [prajitura_existenta for prajitura_existenta in prajituri if
-              get_id(prajitura) != get_id(prajitura_existenta)] + [prajitura]
-    write_file(result, filename)
-    return result
-
-    # v3
     # delete_prajitura(prajituri, get_id(prajitura))
     # add_prajitura(...) dar sunt multi parametri
 
