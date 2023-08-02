@@ -1,0 +1,1 @@
+[{"id": 3, "nume": "p1", "descriere": "yummy", "pret": 100, "calorii": 500, "an_introducere": 2019}, {"id": 5, "nume": "p2", "descriere": "yummier", "pret": 110, "calorii": 300, "an_introducere": 2021}]
