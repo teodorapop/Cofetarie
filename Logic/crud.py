@@ -5,10 +5,11 @@ from Logic.file_ops import write_file
 def get_by_id(prajituri, id_cautat):
     '''
     Gaseste o prajitura dupa id
-    :param prajituri:
-    :param id:
+    :param prajituri: lista de prajituri
+    :param id_cautat: id-ul prajiturii cautate
     :return: prajtura cu id-ul id sau None daca nu exista
     '''
+
     for prajitura in prajituri:
         if get_id(prajitura) == id_cautat:
             return prajitura
@@ -39,6 +40,14 @@ def add_prajitura(prajituri, id, nume, descriere, pret, calorii, an_introducere,
 
 
 def update_prajitura(prajituri, prajitura, filename):
+    '''
+    Modifica o prajitura
+
+    :param prajituri:
+    :param prajitura:
+    :param filename:
+    :return: lista de prajituri modificata
+    '''
     # v1
     # enumerate da tupluri de forma index valoare
 
@@ -47,6 +56,7 @@ def update_prajitura(prajituri, prajitura, filename):
             prajituri[i] = prajitura
             break
     write_file(prajituri, filename)
+    return prajituri
 
     # v2
     # delete_prajitura(prajituri, get_id(prajitura))

@@ -3,11 +3,11 @@ from Domain.prajitura import get_nume, get_calorii, set_calorii, get_an_introduc
 
 def reducere_calorii_by_string(prajituri, string_de_cautare, reducere):
     '''
+    Cauta o prajitura dupa string si reduce caloriile acesteia
 
-    :param prajituri:
+    :param prajituri: lista de prajituri
     :param string_de_cautare:
     :param reducere:
-    :return:
     '''
 
     for prajitura in prajituri:
@@ -20,7 +20,7 @@ def get_praji_with_max_calorii_by_year(prajituri):
     '''
 
     :param prajituri:
-    :return: un dictionar cu cheile fiind anii si valorile prajiturile cu nr ma de calorii din fiecare an
+    :return: un dictionar cu cheile fiind anii si valorile prajiturile cu nr max de calorii din fiecare an
     '''
 
     result = {}
@@ -60,9 +60,10 @@ def get_prajituri_si_raport_pret_calitate(prajituri):
 
 def sumele_preturilor_pentru_fiecare_an(prajituri):
     '''
+    Calculeaza sumele prajiturilor din fiecare an al introducerii
 
     :param prajituri:
-    :return:
+    :return: un dictionar continand anul si suma pt anul respectiv
     '''
 
     result = {}

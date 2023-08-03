@@ -1,7 +1,9 @@
+from copy import deepcopy
+
 from Domain.prajitura import to_str, get_id, create_prajitura, get_nume, get_descriere, get_pret, get_calorii, \
     get_an_introducere
 from Logic.crud import add_prajitura, delete_prajitura, update_prajitura, get_by_id
-from Logic.file_ops import write_file
+from Logic.file_ops import write_file, load_file
 from Logic.operations import reducere_calorii_by_string, get_praji_with_max_calorii_by_year, \
     sumele_preturilor_pentru_fiecare_an, get_prajituri_si_raport_pret_calitate
 
@@ -23,7 +25,7 @@ def run_crud(prajituri, undo_list):
             calorii = int(input('Dati caloriile: '))
             an_introducere = int(input('Dati anul introducerii: '))
 
-            before_add = prajituri[:]  # s ar putea sa fie nevoie de deepcopy in unele cazuri
+            before_add = deepcopy(prajituri)
             add_prajitura(prajituri, id, nume, descriere, pret, calorii, an_introducere, 'prajituri.txt')
 
             undo_list.append(before_add)
@@ -39,7 +41,7 @@ def run_crud(prajituri, undo_list):
             # variabila locala, nu modifica prajiturile date ca parametru
             new_prajituri = delete_prajitura(prajituri, id_stergere, 'prajituri.txt')
 
-            undo_list.append(prajituri)  # deepcopy unele cazuri
+            undo_list.append(prajituri)
             prajituri = new_prajituri
             print('Prajitura a fost stearsa.')
         except ValueError as ve:
@@ -47,41 +49,48 @@ def run_crud(prajituri, undo_list):
         return prajituri
 
     def handle_modificare(prajituri, undo_list):
-        id = input('Dati id-ul: ')
-        prajitura_existenta = get_by_id(prajituri, id)
+        try:
 
-        nume = input('Dati numele sau lasati gol pt a nu se schimba: ')
-        if nume == '':
-            nume = get_nume(prajitura_existenta)
+            before_update = prajituri[:]
+            undo_list.append(before_update)
 
-        descriere = input('Dati descrierea sau lasati gol: ')
-        if descriere == '':
-            descriere = get_descriere(prajitura_existenta)
+            id = input('Dati id-ul: ')
+            prajitura_existenta = get_by_id(prajituri, id)
 
-        pret = input('Dati pretul sau lasati gol: ')
-        if pret == '':
-            pret = get_pret(prajitura_existenta)
-        else:
-            pret = float(pret)
+            nume = input('Dati numele sau lasati gol pt a nu se schimba: ')
+            if nume == '':
+                nume = get_nume(prajitura_existenta)
 
-        calorii = input('Dati caloriile sau lasati gol: ')
-        if calorii == '':
-            calorii = get_calorii(prajitura_existenta)
-        else:
-            calorii = int(calorii)
+            descriere = input('Dati descrierea sau lasati gol: ')
+            if descriere == '':
+                descriere = get_descriere(prajitura_existenta)
 
-        an_introducere = input('Dati anul introducerii sau lasati gol: ')
-        if an_introducere == '':
-            an_introducere = get_an_introducere(prajitura_existenta)
-        else:
-            an_introducere = int(an_introducere)
+            pret = input('Dati pretul sau lasati gol: ')
+            if pret == '':
+                pret = get_pret(prajitura_existenta)
+            else:
+                pret = float(pret)
 
-        prajitura_noua = create_prajitura(id, nume, descriere, pret, calorii, an_introducere)
-        prajituri = update_prajitura(prajituri, prajitura_noua, 'prajituri.txt')
+            calorii = input('Dati caloriile sau lasati gol: ')
+            if calorii == '':
+                calorii = get_calorii(prajitura_existenta)
+            else:
+                calorii = int(calorii)
 
-        print('Prajitura a fost modificata!')
+            an_introducere = input('Dati anul introducerii sau lasati gol: ')
+            if an_introducere == '':
+                an_introducere = get_an_introducere(prajitura_existenta)
+            else:
+                an_introducere = int(an_introducere)
 
-        return prajituri
+            prajitura_noua = create_prajitura(id, nume, descriere, pret, calorii, an_introducere)
+            prajituri = update_prajitura(prajituri, prajitura_noua, 'prajituri.txt')
+
+            print('Prajitura a fost modificata!')
+
+            return prajituri
+        except Exception as e:
+            print('eroare')
 
     def handle_show_all(prajituri):
         for p in prajituri:
@@ -143,7 +152,6 @@ def run_operatii(prajituri):
         for an, suma in sorted_rezultat:
             print('In anul {} suma preturilor este {}'.format(an, suma))
 
-
     while True:
         print('1. Reducere calorii')
         print('2. Afisare prajituri incepand cu un an dat')
@@ -186,7 +194,10 @@ def run_console(prajituri, undo_list):
             undone = run_undo(undo_list)
             if undone is not None:
                 prajituri = undone
-                write_file(prajituri)  # TODO mutata pe logic
+                with open('prajituri.txt', 'w') as f:
+                    f.write('')
+                write_file(prajituri[0])
+                prajituri = load_file()
         elif op == 'x':
             break
         else:
